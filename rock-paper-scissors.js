@@ -1,3 +1,27 @@
+const ul = document.querySelector('ul')
+const container = document.querySelector('div')
+const rock = document.querySelector('#rock')
+const paper = document.querySelector('#paper')
+const scissors = document.querySelector('#scissor')
+
+rock.addEventListener('click', () => {
+    console.log('rock')
+    playRound("rock", getComputerChoice())
+})
+
+paper.addEventListener('click', () => {
+    console.log('paper')
+    playRound("paper", getComputerChoice())
+})
+
+scissors.addEventListener('click', () => {
+    console.log('scissors')
+    playRound("scissors", getComputerChoice())
+})
+
+let event = new CustomEvent('game end')
+
+
 /**
  * 
  */
@@ -42,8 +66,7 @@ let computerScore = 0;
  * 
  */
 function playRound(humanChoice, computerChoice) {
-   
-    
+
     if (humanChoice == "rock"){
         switch (computerChoice) {
             case "rock":
@@ -101,12 +124,14 @@ function playRound(humanChoice, computerChoice) {
 function playGame() {
 
     
-    
+    /*
     for (let i = 0; i < 6; ++i) {
         let human = getHumanChoice();
         let computer = getComputerChoice();
         playRound(human, computer);
     }
+    */
+   // add new below this line 
 
     if (humanScore == computerScore) {
         console.log("Game ended in a tie");
@@ -123,3 +148,5 @@ function playGame() {
     console.log(humanScore);
     console.log(computerScore);
 }
+
+
