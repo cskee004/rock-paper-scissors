@@ -1,12 +1,30 @@
+let humanScore = 0;
+let computerScore = 0;
+
 const ul = document.querySelector('ul')
 const container = document.querySelector('div')
+const startGame = document.querySelector('#start-game')
 const rock = document.querySelector('#rock')
 const paper = document.querySelector('#paper')
 const scissors = document.querySelector('#scissor')
+const scoreBoard = document.querySelector(".score-board")
+const body = document.body
+
+startGame.addEventListener('click', () => {
+    body.removeChild(startGame)
+    const humScore = document.createElement('li')
+    const compScore = document.createElement('li')
+    humScore.innerHTML = "Human score: " 
+    compScore.innerHTML = "Computer score: " 
+    ul.append(humScore)
+    ul.append(compScore)
+    playGame()
+})
 
 rock.addEventListener('click', () => {
     console.log('rock')
     playRound("rock", getComputerChoice())
+    
 })
 
 paper.addEventListener('click', () => {
@@ -19,7 +37,18 @@ scissors.addEventListener('click', () => {
     playRound("scissors", getComputerChoice())
 })
 
-let event = new CustomEvent('game end')
+function updateScoreBoard(result) {
+    
+    switch (result) {
+        case 0:
+            humanScore++
+        case 1:
+            computerScore++
+        case -1:
+            humanScore++
+            computerScore++
+    }
+}
 
 
 /**
@@ -59,26 +88,32 @@ function getHumanChoice() {
     }
 }
 
-let humanScore = 0;
-let computerScore = 0;
+
 
 /**
  * 
  */
 function playRound(humanChoice, computerChoice) {
 
+    let humanWin = 0
+    let computerWin = 1
+    let tie = -1 
+
     if (humanChoice == "rock"){
         switch (computerChoice) {
             case "rock":
                 console.log("Rock and rock is a tie");
+                updateScoreBoard(tie)
                 return;
             case "paper":
                 console.log("Computer wins rock < paper");
-                computerScore++;
+                // computerScore++;
+                updateScoreBoard(computerWin)
                 return;
             case "scissors":
                 console.log("Human player wins rock > scissors");
-                humanScore++;
+                // humanScore++;
+                updateScoreBoard(humanWin)
                 return;
         }
     }
@@ -87,14 +122,17 @@ function playRound(humanChoice, computerChoice) {
         switch (computerChoice) {
             case "rock":
                 console.log("Computer wins paper < rock");
-                computerScore++;
+                // computerScore++;
+                updateScoreBoard(computerWin)
                 return;
             case "paper":
                 console.log("Paper and paper is a tie");
+                updateScoreBoard(tie)
                 return;
             case "scissors":
                 console.log("Human player wins paper > scissors");
-                humanScore++;
+                // humanScore++;
+                updateScoreBoard(humanWin)
                 return;
         }
     }
@@ -103,14 +141,17 @@ function playRound(humanChoice, computerChoice) {
         switch (computerChoice) {
             case "rock":
                 console.log("Computer wins scissors < rock");
-                computerScore++;
+                // computerScore++;
+                updateScoreBoard(computerWin)
                 return;
             case "paper":
                 console.log("Human player wins scissors > paper");
-                humanScore++;
+                // humanScore++;
+                updateScoreBoard(humanWin)
                 return;
             case "scissors":
                 console.log("Scissors and scissors is a tie");
+                updateScoreBoard(tie)
                 return;
         }
     }
@@ -150,3 +191,10 @@ function playGame() {
 }
 
 
+function getHumanScore() {
+    return humanScore
+}
+
+function getComputerScore() {
+    return computerScore
+}
