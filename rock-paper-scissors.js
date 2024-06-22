@@ -15,7 +15,7 @@ const score = document.querySelector('#score')
 
 
 startGame.addEventListener('click', () => {
-    
+    body.removeChild(startGame)
     let matchResults = document.createElement("p")
     matchResults.id = "results"
     body.append(matchResults)
@@ -111,7 +111,9 @@ function checkWinner() {
     let sword = document.getElementById('sword')
     let axe = document.getElementById('axe')
     let lance = document.getElementById('lance')
-    let startButton = body.createElement('button').innerHTML("Start Game")
+    let startButton = document.createElement('button')
+    startButton.id = "start-game"
+    startButton.innerHTML = "Start Game"
     
     
     if (playerScore === 5){
@@ -119,7 +121,8 @@ function checkWinner() {
         gameButtons.removeChild(sword)
         gameButtons.removeChild(axe)
         gameButtons.removeChild(lance)
-        body.appendChild(startButton)
+
+        
         
     }
     else if (computerScore === 5) {
@@ -127,7 +130,8 @@ function checkWinner() {
         gameButtons.removeChild(sword)
         gameButtons.removeChild(axe)
         gameButtons.removeChild(lance)
-        body.appendChild(startButton)
+n
+        
         
     }
     else {
