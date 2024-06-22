@@ -2,113 +2,187 @@ let playerScore = 0;
 let computerScore = 0;
 
 const body = document.body
-const score = document.querySelector('score')
+
 const startGame = document.querySelector('#start-game')
-const rock = document.querySelector('#rock')
-const paper = document.querySelector('#paper')
-const scissors = document.querySelector('#scissor')
+
+const sword = document.querySelector('#sword')
+const axe = document.querySelector('#axe')
+const lance = document.querySelector('#scissor')
+
+const gameButtons = document.querySelector('#buttons')
+const score = document.querySelector('#score')
+
+
 
 startGame.addEventListener('click', () => {
-    body.removeChild(startGame)
-    document.createElement('p')
-    document.createElement('p')
-    score.append(playerBoard)
-    score.append(computBoard)
-
-    playerBoard.innerHTML = playerScore
-    computBoard.innerHTML = computerScore
     
-    playGame()
-})
+    let matchResults = document.createElement("p")
+    matchResults.id = "results"
+    body.append(matchResults)
 
-rock.addEventListener('click', () => {
-    console.log('rock')
-    let result = playRound("rock", getComputerChoice())
-    if (result === 0) {
-        playerScore++
-    }
-    else if (result === 1){
-        computerScore++
-    }
-    console.log("Human score: " + playerScore)
-    console.log("Computer score: " + computerScore)
+    let pScore = document.createElement("div")
+    pScore.id = "player-score"
+    pScore.innerHTML = "Player score: "
+    score.append(pScore)
+    
+    let cScore = document.createElement("div")
+    cScore.id = "comp-score"
+    cScore.innerHTML = "Computer score: "
+    score.append(cScore)
+
+    let swordButton = document.createElement("button")
+    swordButton.id = "sword"
+    swordButton.innerHTML = "Sword"
+    gameButtons.append(swordButton)
+    swordButton.addEventListener('click', () => {
+        sword();
+        
+        function sword() {
+            
+            let result = playRound("sword", getComputerChoice())
+            if (result === 0) {
+                playerScore++;
+                checkWinner()
+            }
+            else if (result === 1) {
+                computerScore++;
+                checkWinner()
+            }
+
+            pScore.innerHTML = "Player score: " + playerScore;
+            cScore.innerHTML = "Computer score: " + computerScore;
+        }
+    })
+    
+    let axeButton = document.createElement("button")
+    axeButton.id = "axe"
+    axeButton.innerHTML = "Axe"
+    gameButtons.append(axeButton)
+    axeButton.addEventListener('click', () => {
+        axe();
+
+        function axe() {
+            
+            let result = playRound("axe", getComputerChoice())
+            if (result === 0) {
+                playerScore++;
+                checkWinner()
+            }
+            else if (result === 1) {
+                computerScore++;
+                checkWinner()
+            }
+         
+            pScore.innerHTML = "Player score: " + playerScore;
+            cScore.innerHTML = "Computer score: " + computerScore;
+        }
+    })
+
+    let lanceButton = document.createElement("button")
+    lanceButton.id = "lance"
+    lanceButton.innerHTML = "Lance"
+    gameButtons.append(lanceButton)
+    lanceButton.addEventListener('click', () => {
+        lance();
+
+        function lance() {
+            
+            let result = playRound("lance", getComputerChoice())
+            if (result === 0) {
+                playerScore++;
+                checkWinner()
+            }
+            else if (result === 1) {
+                computerScore++;
+                checkWinner()
+            }
+
+            pScore.innerHTML = "Player score: " + playerScore;
+            cScore.innerHTML = "Computer score: " + computerScore;
+        }
+    })
+
     
 })
 
-paper.addEventListener('click', () => {
-    console.log('paper')
-    let result = playRound("paper", getComputerChoice())
-    if (result === 0) {
-        playerScore++
+function checkWinner() {
+    
+    let gameResult = document.getElementById('results')
+    let sword = document.getElementById('sword')
+    let axe = document.getElementById('axe')
+    let lance = document.getElementById('lance')
+    let startButton = body.createElement('button').innerHTML("Start Game")
+    
+    
+    if (playerScore === 5){
+        gameResult.innerHTML = "Player wins with score of " + playerScore + " !"
+        gameButtons.removeChild(sword)
+        gameButtons.removeChild(axe)
+        gameButtons.removeChild(lance)
+        body.appendChild(startButton)
+        
     }
-    else if (result === 1){
-        computerScore++
+    else if (computerScore === 5) {
+        gameResult.innerHTML = "Computer wins with a score of " + computerScore + " !"
+        gameButtons.removeChild(sword)
+        gameButtons.removeChild(axe)
+        gameButtons.removeChild(lance)
+        body.appendChild(startButton)
+        
     }
-    console.log("Human score: " + playerScore)
-    console.log("Computer score: " + computerScore)
-})
-
-scissors.addEventListener('click', () => {
-    console.log('scissors')
-    let result = playRound("scissors", getComputerChoice())
-    if (result === 0) {
-        playerScore++
+    else {
+        return 
     }
-    else if(result === 1) {
-        computerScore++
-    }
-    console.log("Human score: " + playerScore)
-    console.log("Computer score: " + computerScore)
-})
-
+}
 
 /**
  * 
  */
-function playRound(humanChoice, computerChoice) {
+function playRound(playerChoice, computerChoice) {
 
     let humanWin = 0
     let computerWin = 1
+    let roundResult = document.getElementById('results')
     
 
-    if (humanChoice == "rock"){
+    if (playerChoice == "sword"){
         switch (computerChoice) {
-            case "rock":
-                console.log("Rock and rock is a tie")
+            case "sword":
+                roundResult.innerHTML = "sword and sword is a tie"
                 return;
-            case "paper":
-                console.log("Computer wins rock < paper")
+            case "axe":
+                roundResult.innerHTML = "Computer wins sword < axe"
                 return computerWin
-            case "scissors":
-                console.log("Human player wins rock > scissors")
+            case "lance":
+                roundResult.innerHTML = "Human player wins sword > lance"
                 return humanWin
         }
     }
 
-    else if (humanChoice == "paper") {
+    else if (playerChoice == "axe") {
         switch (computerChoice) {
-            case "rock":
-                console.log("Computer wins paper < rock")
+            case "sword":
+                roundResult.innerHTML = "Computer wins axe < sword"
                 return computerWin
-            case "paper":
-                console.log("Paper and paper is a tie")
+            case "axe":
+                roundResult.innerHTML = "axe and axe is a tie"
                 return
-            case "scissors":
-                console.log("Human player wins paper > scissors")
+            case "lance":
+                roundResult.innerHTML = "Human player wins axe > lance"
                 return humanWin
         }
     }
 
-    else if (humanChoice == "scissors") {
+    else if (playerChoice == "lance") {
         switch (computerChoice) {
-            case "rock":
-                console.log("Computer wins scissors < rock")
+            case "sword":
+                roundResult.innerHTML = "Computer wins lance < sword"
                 return computerWin
-            case "paper":
-                console.log("Human player wins scissors > paper")
+            case "axe":
+                roundResult.innerHTML = "Human player wins lance > axe"
                 return humanWin
-            case "scissors":
-                console.log("Scissors and scissors is a tie")
+            case "lance":
+                roundResult.innerHTML = "lance and lance is a tie"
                 return
         }
     }
@@ -119,16 +193,7 @@ function playRound(humanChoice, computerChoice) {
  */
 function playGame() {
 
-    
     /*
-    for (let i = 0; i < 6; ++i) {
-        let human = getHumanChoice();
-        let computer = getComputerChoice();
-        playRound(human, computer);
-    }
-    */
-   // add new below this line 
-
     if (playerScore == computerScore) {
         console.log("Game ended in a tie")
     }
@@ -140,9 +205,7 @@ function playGame() {
         console.log("Computer wins with a score of " + computerScore)
         console.log("Human player score " + playerScore)
     }
-
-    console.log(playerScore)
-    console.log(computerScore)
+    */
 }
 
 
@@ -153,31 +216,31 @@ function getComputerChoice() {
     let result = Math.floor(Math.random() * 3)
     
     if (result == 0) {
-        return "rock"
+        return "sword"
     }
     else if (result == 1) {
-        return "paper"
+        return "axe"
     }
     else {
-        return "scissors"
+        return "lance"
     }
 }
 
 /**
  * 
  */
-function getHumanChoice() {
+function getPlayerChoice() {
     
-    let choice = prompt("Please enter your choice (rock, paper, scissors): ")
+    let choice = prompt("Please enter your choice (sword, axe, lance): ")
     if (choice != null) {
         let temp = choice.toLowerCase()
         switch(temp) {
-            case "rock":
-                return "rock"
-            case "paper":
-                return "paper"
-            case "scissors":
-                return "scissors"
+            case "sword":
+                return "sword"
+            case "axe":
+                return "axe"
+            case "lance":
+                return "lance"
                 
         }
     }
