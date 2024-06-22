@@ -111,9 +111,6 @@ function checkWinner() {
     let sword = document.getElementById('sword')
     let axe = document.getElementById('axe')
     let lance = document.getElementById('lance')
-    let startButton = document.createElement('button')
-    startButton.id = "start-game"
-    startButton.innerHTML = "Start Game"
     
     
     if (playerScore === 5){
@@ -121,18 +118,12 @@ function checkWinner() {
         gameButtons.removeChild(sword)
         gameButtons.removeChild(axe)
         gameButtons.removeChild(lance)
-
-        
-        
     }
     else if (computerScore === 5) {
         gameResult.innerHTML = "Computer wins with a score of " + computerScore + " !"
         gameButtons.removeChild(sword)
         gameButtons.removeChild(axe)
         gameButtons.removeChild(lance)
-n
-        
-        
     }
     else {
         return 
